@@ -24,7 +24,7 @@ def setup_args():
     parser.add_argument(
         "-d",
         "--domain",
-        help="domain where goldilocks is installed, e.g. goldilocks.foo.net",
+        help="domain where goldilocks is installed, e.g. foo.net",
         required=True
     )
 
@@ -144,6 +144,7 @@ def get_html(
         Bytes from Goldilocks.
     """
 
+    # This may need to be adjusted depending on your naming scheme.
     cluster_name = "-".join(cluster.split("-")[:-1])
     try:
         endpoint = f"https://goldilocks-{cluster_name}.{domain}/dashboard/{namespace}"
