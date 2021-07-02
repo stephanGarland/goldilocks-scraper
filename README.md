@@ -16,6 +16,8 @@ This does not change your k8s resource limits or requests, nor does it edit file
 ### Prerequisites
 
  - Python 3.6+ for Typing and f-strings
+ - Goldilocks installed in at least one cluster
+ - A .kubeconfig file or some other method of authenticating with the cluster.
  - Packages from requirements.txt
 	 - Note that you may have to [change the kubernetes library version](https://github.com/kubernetes-client/python#compatibility) depending on your cluster's version
 
