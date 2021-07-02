@@ -43,6 +43,22 @@ def setup_args():
     )
 
     parser.add_argument(
+        "-l",
+        "--limit",
+        help="Stat to use for limits - defaults to max",
+        choices=["min", "max", "mean", "median"],
+        default="max"
+    )
+
+    parser.add_argument(
+        "-r",
+        "--request",
+        help="Stat to use for requests - defaults to median",
+        choices=["min", "max", "mean", "median"],
+        default="median"
+    )
+
+    parser.add_argument(
         "-t",
         "--test",
         help="Only collect information from the first cluster to speed up testing",
@@ -312,7 +328,7 @@ def make_aggregate_dataframes(
     cpu_requests_df: pd.DataFrame,
     memory_requests_df: pd.DataFrame,
     cpu_limits_df: pd.DataFrame,
-    memory_limits_df: pd.DataFrame
+    memory_limits_df: pd.DataFrame,
 ) -> tuple:
     """Makes aggregate dataframes.
     Makes Pandas dataframes and fills them with aggregate info for implementation.
@@ -449,7 +465,9 @@ def make_yaml_dump(
     mem_agg_req_df: pd.DataFrame,
     cpu_agg_lim_df: pd.DataFrame,
     mem_agg_lim_df: pd.DataFrame,
-    mib: bool
+    mib: bool,
+    stat_lim: str = "max",
+    stat_req: str = "median"
 ) -> str:
     """Creates a single string of recommendations per SOA.
     Creates a single formatted string - not necessarily to YAML spec,
@@ -459,6 +477,7 @@ def make_yaml_dump(
         soas: The index from an aggregate dataframe, which is a list of SOAs.
         {cpu,mem}_agg_{req,lim}_df: Dataframes containing aggregates for resources.
         mib: From args.mib - indicates whether to use Gi[B] or Mi[B].
+        stat_{lim,req}: A str of {min, max, mean, median} to select that stat.
 
 
     Raises:
@@ -467,8 +486,7 @@ def make_yaml_dump(
     Returns:
         A formatted string of all recommendations.
     """
-    STAT_FOR_LIMIT = "max"
-    STAT_FOR_REQUEST = "median"
+
     soa_recs = {}
 
     for soa in soas:
@@ -478,8 +496,8 @@ def make_yaml_dump(
             cpu_agg_lim_df,
             mem_agg_lim_df,
             soa,
-            STAT_FOR_LIMIT,
-            STAT_FOR_REQUEST,
+            stat_lim,
+            stat_req,
             mib
         )
         soa_recs[soa] = soa_rec
@@ -519,7 +537,9 @@ if __name__ == "__main__":
         mem_agg_req_df,
         cpu_agg_lim_df,
         mem_agg_lim_df,
-        args.mib
+        args.mib,
+        args.limit,
+        args.request
     )
 
     with open(args.file, "w") as f:
