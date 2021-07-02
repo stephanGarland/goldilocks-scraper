@@ -1,0 +1,6 @@
+requests==2.25.1
+pyyaml==5.4.1
+beautifulsoup4==4.9.3
+kubernetes==17.17.0
+nested_dict==1.61
+pandas==1.2.5
