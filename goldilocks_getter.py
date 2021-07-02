@@ -92,7 +92,7 @@ def get_clusters(env: str, test: bool = False) -> List[str]:
     filtered_contexts = [x["name"] for x in contexts if x["name"].startswith(env)]
     if test:
         return filtered_contexts[:1]
-    return [x["name"] for x in contexts if x["name"].startswith(env)]
+    return filtered_contexts
 
 
 def get_namespaces(cluster: str) -> List[str]:
