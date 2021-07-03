@@ -33,7 +33,7 @@ This does not change your k8s resource limits or requests, nor does it edit file
       -h, --help            show this help message and exit
       -d DOMAIN, --domain DOMAIN
                             domain where goldilocks is installed, 
-                            e.g. goldilocks.foo.net
+                            e.g. foo.net
       -f FILE, --file FILE  Output file to store recommendations in
       -m, --mib             Use MiB instead of GiB for memory units
       -l {min,max,mean,median}, --limit {min,max,mean,median}
