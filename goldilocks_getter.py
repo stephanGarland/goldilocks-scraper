@@ -14,8 +14,6 @@ from nested_dict import nested_dict
 from typing import Dict
 from typing import List
 
-import sys
-
 
 def setup_args():
     parser = argparse.ArgumentParser(
