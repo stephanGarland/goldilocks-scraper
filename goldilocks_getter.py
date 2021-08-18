@@ -174,9 +174,8 @@ def get_html(
         Bytes from Goldilocks.
     """
 
-    # This may need to be adjusted depending on your naming scheme.
-    # cluster_name = "-".join(cluster.split("-")[:-1])
-
+    # Test multiple hostname from domain separators.
+    # The endpoint should normally be a FQDN (e.g. use a dot).
     separators = ["-", "."]
 
     for index, sep in enumerate(separators):
@@ -273,9 +272,6 @@ def convert_bytes_to_human_readable(machine_bytes: int, gib: bool = False) -> st
     Returns:
         A string of human-readable bytes, e.g. 1 [GiB].
     """
-
-    # if isinstance(machine_bytes, str):
-    #     return f"{''.join(filter(str.isdigit, machine_bytes))}"
 
     if gib:
         multiplicand = 30
