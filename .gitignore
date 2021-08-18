@@ -130,3 +130,7 @@ dmypy.json
 
 # VSCODE
 .vscode/
+
+# Exported data
+*.yaml
+*.csv
