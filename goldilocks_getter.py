@@ -176,14 +176,24 @@ def get_html(
 
     # This may need to be adjusted depending on your naming scheme.
     # cluster_name = "-".join(cluster.split("-")[:-1])
-    try:
-        endpoint = f"https://goldilocks.{cluster}.{domain}/dashboard/{namespace}"
-        request = requests.get(endpoint)
-    except requests.exceptions.ConnectionError:
-        print(f"Exception raised when connecting to {endpoint}")
-        raise SystemExit
 
-    return request.content
+    separators = ["-", "."]
+
+    for index, sep in enumerate(separators):
+        try:
+            endpoint = f"https://goldilocks.{cluster}{sep}{domain}/dashboard/{namespace}"
+
+            print(f"Attempt connecting to {endpoint}")
+            request = requests.get(endpoint)
+            print(f"Successfully connected to {endpoint}")
+
+            return request.content
+        except requests.exceptions.ConnectionError:
+            if index < len(separators):
+                print(f"Failed connecting to {endpoint}")
+            else:
+                print(f"Exception raised when connecting to {endpoint}")
+                raise SystemExit
 
 
 def make_soup(
